@@ -1,0 +1,29 @@
+References:
+Scikit Learn (Naive Bayes):
+http://scikit-learn.org/stable/modules/classes.html#module-sklearn.naive_bayes
+Support Vector Machines:
+http://scikit-learn.org/stable/modules/svm.html
+http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+http://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html
+Sklearn neighbors (KNeighborsClassifie):
+http://scikit-learn.org/stable/modules/classes.html#module-sklearn.neighbors
+Generalized Linear Models:
+http://scikit-learn.org/stable/modules/linear_model.html
+Visualizing K-Means Clustering:
+http://www.naftaliharris.com/blog/visualizing-k-means-clustering
+Clustering:
+http://scikit-learn.org/stable/modules/clustering.html
+Preprocessing data:
+http://scikit-learn.org/stable/modules/preprocessing.html
+Cross-validation: evaluating estimator performance:
+http://scikit-learn.org/stable/modules/cross_validation.html
+sklearn.grid_search.GridSearchCV:
+http://scikit-learn.org/stable/modules/classes.html#module-sklearn.grid_search
+sklearn.metrics.accuracy_score:
+http://scikit-learn.org/stable/modules/classes.html#module-sklearn.metrics
+Pipeline and FeatureUnion: combining estimators:
+http://scikit-learn.org/stable/modules/pipeline.html
+sklearn.cross_validation.StratifiedShuffleSplit:
+http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
+sklearn.feature_selection.SelectKBest:
+http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest

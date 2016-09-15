@@ -41,15 +41,14 @@ from sklearn.tree import DecisionTreeClassifier
 ### The first feature must be "poi".
 
 
-features_list = ['poi', 'salary', 'bonus', 'deferral_payments', 'total_payments', 'ave_earnings', 
+features_list = ['poi', 'salary', 'bonus', 'deferral_payments', 'total_payments', 'ave_earnings',
                  'deferred_income','total_stock_value', 'exercised_stock_options', 
                 'restricted_stock', 'restricted_stock_deferred', 'expenses',  
                  'long_term_incentive', 'shared_receipt_with_poi', 
                  'from_this_person_to_poi','from_poi_to_this_person',
                 'to_messages','from_messages'] 
                 
-           
-                
+
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
@@ -131,8 +130,8 @@ my_dataset .pop('HAYSLETT RODERICK J',0)
 
 ###Extract features and labels from dataset for local testing
 
-#I removed entries with all '0' by utilizing the featurFormat parameters 
-# in order to clean up the data and avoid any problem on score calculations. 
+# I removed entries with all '0' by utilizing the featurFormat parameters 
+# in order to clean up the data and avoid any problem on score calcultions. 
 # Especially when these data entries would not have any impact on finding POI.
 
 data = featureFormat(my_dataset, features_list, sort_keys = True, remove_NaN=True,
@@ -157,6 +156,7 @@ labels, features = targetFeatureSplit(data)
 # Statistical Overview of the data:
 
 print "\nTotal number of data points in data_dict:", len(data_dict) 
+print "\nTotal number of data points in my_dataset:", len(my_dataset) 
 print "\n Original Features List:\n"
 pprint (features_list)
 print "\nNumber of features:", len(features_list)
@@ -185,8 +185,7 @@ def tester_scores ():
     print "Tester Classifier Report" 
     test_classifier(clf, my_dataset, features_list)
     print ' '
-#    print "sklearn.metrics.classification_report Report" 
-#    print classification_report(y_true=labels_test, y_pred=labels_pred, target_names=target_names)
+
     
 print ' '
 print "varity of Clasifiers Verification Before any fine tuning:"
@@ -201,17 +200,6 @@ print "varity of Clasifiers Verification Before any fine tuning:"
 # 4. Random Forest
 # 5. Gaussian NB 
  
-clf = LR()
-tester_scores ()
-
-clf = LinearSVC()
-tester_scores() 
-
-clf = DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0)
-tester_scores()  
-
-clf = RandomForestClassifier(n_estimators=10, max_depth=None, min_samples_split=1, random_state=0)
-tester_scores()  
 
 clf = GaussianNB()
 tester_scores ()
@@ -254,38 +242,7 @@ data = featureFormat(my_dataset, features_list)
 labels, features = targetFeatureSplit(data)
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.1, random_state=42)
-   
-LRmodel = LR()
-LRmodel.fit(features_train, labels_train)
-labels_pred = LRmodel.predict(features_test)
 
-print "labels_pred",labels_pred 
-score = metrics.accuracy_score(labels_test, labels_pred)
-confmat = confusion_matrix(labels_test, labels_pred)
-fscore = f1_score(labels_test, labels_pred)
-
-print("model acc: " + str(score) + ", F-score: " + str(fscore))
-print ' '
-print " confusion matrix:\n",confmat
-print ' '
-print "logistic regression coefficients:\n", (np.column_stack((features_list_new, LRmodel.coef_[0])))
-print ' '
-
-
-target_names = ["Not POI", "POI"]
-
-
-clf = LR()
-tester_scores ()
-
-clf = LinearSVC()
-tester_scores() 
-
-clf = DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0)
-tester_scores()  
-
-clf = RandomForestClassifier(n_estimators=10, max_depth=None, min_samples_split=1, random_state=0)
-tester_scores()  
 
 clf = GaussianNB()
 tester_scores () 
@@ -294,11 +251,11 @@ tester_scores ()
 # clasifier has around .3 precision and recall values. 
 
 # Next I will apply GridSearchCV method with stratified shuffle split cross validation  
-# to get the best parameter sets for each classifier after applying it in a pipeline of 
+# to get the best parametr sets for each clasifier after applying it in a pipeline of 
 # SelectKbest, pca to send the principal components of selected features to the clasifier.
 
 def gridsearchcv(clfi):
-    sk_fold = StratifiedShuffleSplit(labels, 1000, test_size=0.1, random_state = 42)
+    sk_fold = StratifiedShuffleSplit(labels, 100, test_size=0.1, random_state = 42)
     skb = SelectKBest()
     pca = PCA()
     clf = clfi
@@ -317,17 +274,6 @@ def gridsearchcv(clfi):
     clf = gs.best_estimator_
     return clf
     
-clf = gridsearchcv(LR())
-tester_scores ()
-
-clf = gridsearchcv(LinearSVC())
-tester_scores() 
-
-clf = gridsearchcv(DecisionTreeClassifier())
-tester_scores() 
-
-clf = gridsearchcv(RandomForestClassifier())
-tester_scores() 
 
 clf = gridsearchcv(GaussianNB())
 tester_scores() 
@@ -340,5 +286,5 @@ tester_scores()
 ### that the version of poi_id.py that you submit can be run on its own and
 ### generates the necessary .pkl files for validating your results.
 
-dump_classifier_and_data(clf, my_dataset, features_list)
+#dump_classifier_and_data(clf, my_dataset, features_list)
 
